@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Studendos - Study App</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:beige;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+width:380px;
+text-align:center;
+}
+
+.timer{
+font-size:40px;
+margin:20px 0;
+}
+
+button{
+padding:10px 18px;
+margin:5px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:green;
+color:white;
+}
+
+button:hover{
+background:rgb(157, 176, 157);
+}
+
+input,a{
+padding:8px;
+border-radius:6px;
+border:1px solid rgb(127, 145, 211);
+text-decoration: none;
+background:rgb(157, 176, 157);
+
+}
+
+ul{
+text-align:left;
+margin-top:10px;
+}
+
+.dark{
+background:#121212;
+color:white;
+}
+
+.dark .container{
+background:#1e1e1e;
+}
+
+.streak{
+font-size:18px;
+margin:10px 0;
+color:#ff7b00;
+}
+img{
+    width: 50px;
+    height: 50px;
+}
+</style>
+</head>
+
+<body>
+    <section>
+</section>
+
+<div class="container">
+
+<h1>Studendos ⏱</h1>
+
+<div class="streak">
+🔥 Study Streak: <span id="streak">0</span> days
+</div>
+
+<div class="timer" id="timer">25:00</div>
+
+<button onclick="startTimer()">Start</button>
+<button onclick="resetTimer()">Reset</button>
+
+<h3>Pomodoro Mode</h3>
+<button onclick="setStudy()">Study 25min</button>
+<button onclick="setBreak()">Break 5min</button>
+
+<h3>Study Tasks</h3>
+
+<input id="taskInput" placeholder="Add task">
+<button onclick="addTask()">Add</button>
+
+<ul id="taskList"></ul>
+<p><a href="guide.html">Study Guide</a></p>
+
+<h3>Focus Music 🎧</h3>
+<audio controls>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a1e7e1f3f.mp3" type="audio/mpeg">
+</audio>
+
+<br><br>
+
+<button onclick="toggleDark()">🌙 Dark Mode</button>
+<a href="index.html">Login</a>
+
+</div>
+
+<script>
+
+let time = 1500;
+let interval;
+let streak = 0;
+
+function updateTimer(){
+let m = Math.floor(time/60);
+let s = time%60;
+
+document.getElementById("timer").innerHTML =
+String(m).padStart(2,'0') + ":" +
+String(s).padStart(2,'0');
+}
+
+function startTimer(){
+
+clearInterval(interval);
+
+interval = setInterval(function(){
+
+time--;
+updateTimer();
+
+if(time <= 0){
+clearInterval(interval);
+alert("Study session finished!");
+
+streak++;
+document.getElementById("streak").innerText = streak;
+
+}
+
+},1000);
+
+}
+
+function resetTimer(){
+clearInterval(interval);
+updateTimer();
+}
+
+function setStudy(){
+time = 1500;
+updateTimer();
+}
+
+function setBreak(){
+time = 300;
+updateTimer();
+}
+
+function addTask(){
+
+let task = document.getElementById("taskInput").value;
+
+let li = document.createElement("li");
+li.textContent = task;
+
+document.getElementById("taskList").appendChild(li);
+
+document.getElementById("taskInput").value = "";
+
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+updateTimer();
+
+</script>
+
+</body>
+</html
